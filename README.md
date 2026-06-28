@@ -1,27 +1,23 @@
-# URL Shortener
+# url-shortener
 
-Shorten URLs, track click analytics, generate QR codes, and manage all your links from a clean dashboard.
+Shorten URLs and track how many times each one is clicked.
 
-## Features
+Uses a local Express API with PostgreSQL to store the mappings. Short codes are random 6-character strings.
 
-- One-click URL shortening with custom slug support
-- Click analytics: total clicks, clicks over time, referrer breakdown
-- QR code generation for each short link
-- Link management dashboard (edit, delete, enable/disable)
-- Expiry date per link
-- Copy to clipboard and share buttons
-
-## Stack
-
-![TypeScript](https://img.shields.io/badge/TypeScript-3178c6?style=flat&logo=typescript&logoColor=white)
-![React](https://img.shields.io/badge/React-61dafb?style=flat&logo=react&logoColor=black)
-![Vite](https://img.shields.io/badge/Vite-646cff?style=flat&logo=vite&logoColor=white)
-
-## Run locally
+## Setup
 
 ```bash
-npm install && npm run dev
+# Requires PostgreSQL
+cp .env.example .env  # add DATABASE_URL
+npm install
+npm run db:push
+npm run dev
 ```
 
----
-Made by [9bzero](https://github.com/9bzero)
+## API
+
+```
+POST /api/shorten   { url: https://... }  → { shortCode, shortUrl }
+GET  /:code         → redirects to original URL
+GET  /api/stats/:code  → { clicks, createdAt }
+```
